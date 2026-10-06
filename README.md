@@ -85,11 +85,14 @@ an approved budget: `--aprovar-orcamento <usd>` (approve budget), then `--auto`.
 
 ## How this was built
 
+This repository is a curated public copy of a private working repository (88 commits since June 2026); its own history starts at publication.
+
 Designed and directed by Rafa Maretti; implemented with AI coding agents (Claude Code). The agents
 wrote the code. The product, the cost and consistency rules, the acceptance tests and the review of
 every change were his.
 
 ## License
 
-Copyright © 2026 Rafa Maretti. All rights reserved. The source is published for review; no license
-to use, copy or modify it is granted.
+Copyright © 2026 Rafa Maretti. All rights reserved. The source is published so it can be
+reviewed; using, copying or commercialising it requires a written licence from the author
+(hello@rafamaretti.com). See [LICENSE](LICENSE).
