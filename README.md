@@ -1,5 +1,7 @@
 # FilmBam
 
+[![Engine CI](https://github.com/goodbridge-rafa/filmbam-project/actions/workflows/engine-ci.yml/badge.svg)](https://github.com/goodbridge-rafa/filmbam-project/actions/workflows/engine-ci.yml) [![Worker CI](https://github.com/goodbridge-rafa/filmbam-project/actions/workflows/verify-v2.yml/badge.svg)](https://github.com/goodbridge-rafa/filmbam-project/actions/workflows/verify-v2.yml)
+
 **A one-line brief in, a finished short film out: multi-model AI video orchestration with hard cost
 gates, consistency built into generation, and technical QA on every stage.**
 
