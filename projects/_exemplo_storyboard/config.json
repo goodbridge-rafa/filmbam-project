@@ -1,0 +1,55 @@
+{
+  "formato": "storyboard",
+  "seed": 4242,
+  "saida": "storyboard.png",
+  "override": {
+    "aspect": "16:9"
+  },
+  "orcamento": {
+    "cap_usd": 0,
+    "aprovado": false
+  },
+  "etapas_aprovadas": [],
+  "personagens": {
+    "barista": {
+      "bible": "man in his mid-30s, short grey-flecked beard, worn leather apron over a white shirt",
+      "ref_prompt": "man in his mid-30s, short grey-flecked beard, worn leather apron over a white shirt, cozy specialty coffee shop, warm morning light, photorealistic",
+      "voice_id": "",
+      "lora": null,
+      "refs": []
+    }
+  },
+  "quadros": [
+    {
+      "id": "01",
+      "prompt": "the barista unlocks the shop door at dawn, street still blue",
+      "legenda": "Unlocking at dawn"
+    },
+    {
+      "id": "02",
+      "prompt": "close on hands grinding fresh beans, steam and dust in the light",
+      "legenda": "Grinding beans"
+    },
+    {
+      "id": "03",
+      "prompt": "pulling an espresso shot, crema pouring into a small cup",
+      "legenda": "The first shot"
+    },
+    {
+      "id": "04",
+      "prompt": "pouring latte art, heart shape forming, focused face",
+      "legenda": "Latte art"
+    },
+    {
+      "id": "05",
+      "prompt": "sliding the cup across the counter to a customer's hands",
+      "legenda": "Handing it over"
+    },
+    {
+      "id": "06",
+      "prompt": "exterior at dusk, the shop sign glowing warm",
+      "legenda": "Sign at dusk"
+    }
+  ],
+  "_nota": "Storyboard recipe. 1 image per frame with the SAME refs; a single numbered board."
+}

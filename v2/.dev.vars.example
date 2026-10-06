@@ -1,0 +1,15 @@
+# Copy to v2/.dev.vars (gitignored) to run `npm run dev` / `npm test` locally.
+# In production these values are set with `wrangler secret put <NAME>`, NEVER in wrangler.toml.
+
+# Code any visitor enters to sign in (role "user").
+ACCESS_CODE=change-me-access
+# Owner code (role "owner": sees all orders, no daily limit, /api/admin/ledger).
+OWNER_CODE=change-me-owner
+# Runner secret (X-Worker-Secret header). At least 32 bytes; generate with: openssl rand -hex 32
+WORKER_SECRET=0000000000000000000000000000000000000000000000000000000000000000
+# Keys the runner fetches from GET /api/worker/keys (so GitHub only needs 2 secrets).
+FAL_KEY=
+ELEVENLABS_API_KEY=
+# Optional: wakes the runner immediately (repository_dispatch). Fine-grained token, actions:write only.
+GITHUB_TOKEN=
+GITHUB_REPO=your-org/filmbam

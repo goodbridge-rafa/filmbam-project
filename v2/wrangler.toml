@@ -1,0 +1,42 @@
+# FilmBam V2: Cloudflare Worker
+name = "filmbam"
+main = "src/index.ts"
+compatibility_date = "2026-06-01"
+
+# Static front end (v2/public, SPA). run_worker_first: every response goes through the Worker,
+# which applies CSP/X-Frame-Options to the HTML as well.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = true
+
+# Database (queue, users, ledger). database_id: replace with the id printed by
+# `wrangler d1 create filmbam` (the placeholder works in local/test mode).
+[[d1_databases]]
+binding = "DB"
+database_name = "filmbam"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
+# Delivered media (final.mp4 / storyboard.png), served only to the order's owner for LINK_DAYS.
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "filmbam-media"
+
+# Caps and limits. The catalog/prices live in src/catalog.ts.
+[vars]
+CAP_FILM_USD = "30"
+CAP_STORY_USD = "5"
+CAP_MONTH_USD = "60"
+PER_DAY = "3"
+LINK_DAYS = "3"
+ORPHAN_HOURS = "2"
+BRIEF_MAX = "600"
+MEDIA_MAX_MB = "200"
+# PUBLIC_BASE_PATH = "/apps/filmbam"      # set only when mounted under a path on a shared origin
+# PUBLIC_URL = "https://example.com/apps/filmbam" # full public media base; default origin + PUBLIC_BASE_PATH
+# CSP = "..."                           # optional: overrides the default Content-Security-Policy
+
+[observability]
+enabled = true

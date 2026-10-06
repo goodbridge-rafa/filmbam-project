@@ -1,0 +1,46 @@
+# FilmBam V2: FREE PROTOTYPE.
+#
+# A separate config on purpose: production (wrangler.toml) stays untouched, with its own Worker,
+# database and bucket. Here:
+#   • there is NO [[r2_buckets]]: the account has no R2 enabled and this deployment provisions nothing;
+#   • DEMO_MODE = "1" switches off production, the runner and media delivery on the SERVER;
+#   • the database is a DIFFERENT one (filmbam-prototype), so the prototype never touches production data.
+#
+# Deploy: wrangler deploy -c wrangler.demo.toml
+name = "filmbam-prototype"
+main = "src/index.ts"
+compatibility_date = "2026-06-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = true
+
+# The prototype's own database (D1 free plan). Replace database_id with the id printed by
+# `wrangler d1 create filmbam-prototype`.
+[[d1_databases]]
+binding = "DB"
+database_name = "filmbam-prototype"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
+# No [[r2_buckets]]: without a MEDIA binding the Worker refuses media delivery with 503 media_unavailable.
+
+[vars]
+DEMO_MODE = "1"
+# Same caps as production: the prototype genuinely exercises them, without spending anything.
+CAP_FILM_USD = "30"
+CAP_STORY_USD = "5"
+CAP_MONTH_USD = "60"
+PER_DAY = "3"
+LINK_DAYS = "3"
+ORPHAN_HOURS = "2"
+BRIEF_MAX = "600"
+MEDIA_MAX_MB = "200"
+PUBLIC_BASE_PATH = "/apps/filmbam"
+# PUBLIC_URL = "https://example.com/apps/filmbam" # only if the public origin differs
+# CSP = "..."
+
+[observability]
+enabled = true

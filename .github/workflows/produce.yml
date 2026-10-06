@@ -1,0 +1,80 @@
+# FilmBam V2 production runner.
+# Wakes within seconds on `repository_dispatch` (event_type filmbam-order, sent by the Worker API
+# when an order is created) and can also be started by hand. It is dispatch-only: there is no
+# scheduled sweep, so an idle repository spends no Actions minutes.
+# One job at a time (concurrency group "filmbam", never cancelled mid-production), at most
+# MAX_ORDERS orders per run. Without FILMBAM_API_URL the job ends quietly (exit 0).
+#
+# Time invariant (runner/produce.py docstring · v2/wrangler.toml ORPHAN_HOURS=2):
+#   per order  claim → done/failed within ORDER_BUDGET_S (6600 s = 110 min) < ORPHAN_HOURS (2 h),
+#              otherwise the API re-queues the order and the next run pays for it AGAIN from scratch;
+#   per job    RUN_BUDGET_S (16800 s = 280 min) ≥ MAX_ORDERS (2) × ORDER_BUDGET_S (220 min) and
+#              ≤ timeout-minutes (300) minus the setup steps; a job killed by GitHub posts nothing,
+#              so produce.py stops claiming when less than ORDER_BUDGET_S of RUN_BUDGET_S is left.
+#   Changing timeout-minutes, MAX_ORDERS or ORDER_BUDGET_S means re-checking these numbers
+#   (runner/tests/test_runner.py::test_order_time_budget_fits_the_api_orphan_window does).
+name: FilmBam produce
+
+on:
+  repository_dispatch:
+    types: [filmbam-order]
+  workflow_dispatch:
+
+concurrency:
+  group: filmbam
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  produce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      FILMBAM_API_URL: ${{ secrets.FILMBAM_API_URL }}
+    steps:
+      - name: Gate — nothing to do without FILMBAM_API_URL
+        id: gate
+        run: |
+          if [ -z "$FILMBAM_API_URL" ]; then
+            echo "FILMBAM_API_URL is empty — nothing to do"
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout
+        if: steps.gate.outputs.enabled == 'true'
+        uses: actions/checkout@v5
+
+      - name: Set up Python 3.11
+        if: steps.gate.outputs.enabled == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: ffmpeg (ubuntu-latest ships it — apt only as a fallback)
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+          ffmpeg -version | head -1
+
+      - name: Install Python dependencies
+        if: steps.gate.outputs.enabled == 'true'
+        run: pip install -r requirements.txt
+
+      - name: Produce pending orders
+        if: steps.gate.outputs.enabled == 'true'
+        env:
+          FILMBAM_WORKER_SECRET: ${{ secrets.FILMBAM_WORKER_SECRET }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          MAX_ORDERS: '2'
+          # 280 min: ≥ 2 × ORDER_BUDGET_S (110 min each), ≤ timeout-minutes 300 minus setup.
+          RUN_BUDGET_S: '16800'
+          RUNNER_ID: gh-${{ github.run_id }}
+        run: python3 runner/produce.py

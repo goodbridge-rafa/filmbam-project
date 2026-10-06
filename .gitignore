@@ -1,0 +1,20 @@
+# Secrets — NEVER commit (fal and ElevenLabs keys)
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Generated video output (heavy, reproducible) — config.json is versioned
+projects/*/output/
+
+# System
+.DS_Store
+
+# Generated refs/keyframes (heavy and reproducible — the run's evidence is in custos.json)
+projects/*/assets/

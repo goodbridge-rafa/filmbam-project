@@ -1,0 +1,58 @@
+[
+  {
+    "ts": "2026-09-01 16:30:11",
+    "etapa": 2,
+    "plano": "barista",
+    "modelo": "ref_img",
+    "usd": 0.6,
+    "detalhe": ""
+  },
+  {
+    "ts": "2026-09-01 16:30:44",
+    "etapa": "SB",
+    "plano": "01",
+    "modelo": "keyframe_bulk",
+    "usd": 0.08,
+    "detalhe": ""
+  },
+  {
+    "ts": "2026-09-01 16:30:59",
+    "etapa": "SB",
+    "plano": "02",
+    "modelo": "keyframe_bulk",
+    "usd": 0.08,
+    "detalhe": ""
+  },
+  {
+    "ts": "2026-09-01 16:31:09",
+    "etapa": "SB",
+    "plano": "03",
+    "modelo": "keyframe_bulk",
+    "usd": 0.08,
+    "detalhe": ""
+  },
+  {
+    "ts": "2026-09-01 16:31:23",
+    "etapa": "SB",
+    "plano": "04",
+    "modelo": "keyframe_bulk",
+    "usd": 0.08,
+    "detalhe": ""
+  },
+  {
+    "ts": "2026-09-01 16:31:36",
+    "etapa": "SB",
+    "plano": "05",
+    "modelo": "keyframe_bulk",
+    "usd": 0.08,
+    "detalhe": ""
+  },
+  {
+    "ts": "2026-09-01 16:31:46",
+    "etapa": "SB",
+    "plano": "06",
+    "modelo": "keyframe_bulk",
+    "usd": 0.08,
+    "detalhe": ""
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "ts": "2026-09-03 10:45:31",
+    "etapa": 2,
+    "plano": "runner",
+    "modelo": "ref_img",
+    "usd": 0.6,
+    "detalhe": ""
+  },
+  {
+    "ts": "2026-09-03 10:46:07",
+    "etapa": 3,
+    "plano": "01_kf",
+    "modelo": "keyframe_bulk",
+    "usd": 0.08,
+    "detalhe": ""
+  },
+  {
+    "ts": "2026-09-03 10:51:57",
+    "etapa": 3,
+    "plano": "01",
+    "modelo": "kling3_pro",
+    "usd": 0.84,
+    "detalhe": ""
+  },
+  {
+    "ts": "2026-09-03 10:58:14",
+    "etapa": 6,
+    "plano": "trilha",
+    "modelo": "musica_fal",
+    "usd": 0.0933,
+    "detalhe": ""
+  },
+  {
+    "ts": "2026-09-03 10:58:28",
+    "etapa": 6,
+    "plano": "sfx_0",
+    "modelo": "sfx",
+    "usd": 0.06,
+    "detalhe": ""
+  },
+  {
+    "ts": "2026-09-03 10:58:32",
+    "etapa": 7,
+    "plano": "01",
+    "modelo": "upscale",
+    "usd": 0.311,
+    "detalhe": ""
+  }
+]

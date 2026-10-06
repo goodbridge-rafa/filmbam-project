@@ -1,0 +1,25 @@
+# Engine and runner tests: no API keys, a local mock of the Worker API, ffmpeg from apt.
+name: Engine CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+      - run: pip install -r requirements.txt pytest
+      - run: python -m py_compile orchestrate.py presets.py qa.py
+      - run: pytest -q runner/tests
+      - name: Price an example film without calling any API
+        run: python orchestrate.py --project _exemplo --dry-run

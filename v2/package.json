@@ -1,0 +1,29 @@
+{
+  "name": "filmbam",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FilmBam V2 — public site + API on Cloudflare Workers (Hono, D1, R2). Contract: v2/README.md",
+  "scripts": {
+    "dev": "wrangler dev --local --port 8787",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "deploy": "wrangler deploy",
+    "migrate": "wrangler d1 migrations apply filmbam --local",
+    "migrate:remote": "wrangler d1 migrations apply filmbam --remote",
+    "types": "wrangler types"
+  },
+  "dependencies": {
+    "hono": "^4.13.5"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.22.0",
+    "@cloudflare/workers-types": "^5.20260903.1",
+    "typescript": "^5.9.0",
+    "vitest": "^4.1.11",
+    "wrangler": "^4.128.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

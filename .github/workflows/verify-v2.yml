@@ -1,0 +1,47 @@
+# Worker CI: typecheck, the Vitest suite (isolated D1 + R2 emulation), a bundle dry run and a
+# headless browser check of the mounted interface against a local `wrangler dev`.
+# Nothing here contacts a Cloudflare account or a paid provider, and no secrets are needed.
+name: Worker CI
+on:
+  pull_request:
+    paths: ['v2/**', '.github/workflows/verify-v2.yml']
+  push:
+    branches: [main]
+    paths: ['v2/**', '.github/workflows/verify-v2.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: filmbam-v2-verify-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: v2
+    env:
+      WRANGLER_SEND_METRICS: 'false'
+      CI: 'true'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: v2/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - name: Verify root and native subpath with isolated D1 and R2
+        run: npm test
+      - name: Verify Worker bundle without uploading
+        run: npx wrangler deploy --dry-run --outdir /tmp/filmbam-build
+      - name: Install browser QA runtime in this disposable cloud runner
+        run: |
+          python3 -m pip install playwright
+          python3 -m playwright install --with-deps chromium
+      - name: Verify mounted interface against the real Worker in isolated emulation
+        run: python3 tests-front/test_mount.py

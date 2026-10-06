@@ -1,0 +1,2 @@
+fal-client>=1.0   # client_timeout (per-call deadline) does not exist before this version
+requests

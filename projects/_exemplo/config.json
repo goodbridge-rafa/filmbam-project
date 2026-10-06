@@ -1,0 +1,60 @@
+{
+  "formato": "reel",
+  "seed": 1234,
+  "saida": "final.mp4",
+  "override": {
+    "aspect": "9:16"
+  },
+  "orcamento": {
+    "cap_usd": 0,
+    "aprovado": false
+  },
+  "etapas_aprovadas": [],
+  "personagens": {
+    "protagonista": {
+      "bible": "woman, 30, red jacket, dark hair tied back, natural light",
+      "ref_prompt": "woman, 30, red jacket, dark hair tied back, natural light, photorealistic",
+      "voice_id": "",
+      "lora": null,
+      "refs": []
+    }
+  },
+  "planos": [
+    {
+      "id": "01",
+      "tipo": "multishot",
+      "personagem": "protagonista",
+      "dur": 8,
+      "encadear": false,
+      "prompt": "Two shots, hard cut. Shot 1 (5s): wide shot on the pier at dusk, she walks toward the water; woman, 30, red jacket, dark hair tied back. Cut to shot 2 (3s): close on her face, wind in her hair, melancholic look; same woman, same jacket, same light.",
+      "multi_prompt": [
+        {
+          "prompt": "wide shot on the pier at dusk, she walks toward the water; woman, 30, red jacket, dark hair tied back",
+          "duration": 5
+        },
+        {
+          "prompt": "close on her face, wind in her hair, melancholic look; same woman, red jacket, same dusk light",
+          "duration": 3
+        }
+      ],
+      "_nota": "CUT = the whole scene in a single call (Seedance multi-shot / Kling multi_prompt). encadear:false because the next shot is a different framing."
+    },
+    {
+      "id": "02",
+      "tipo": "support",
+      "personagem": "protagonista",
+      "dur": 4,
+      "encadear": true,
+      "prompt": "shot from behind looking at the horizon, low sun reflecting on the water; woman, 30, red jacket, dark hair tied back",
+      "_nota": "encadear:true ONLY when this shot CONTINUES the previous shot's action from its last frame."
+    }
+  ],
+  "audio": {
+    "narracao": "",
+    "voice_id": "",
+    "trilha_prompt": "slow, melancholic, cinematic piano",
+    "sfx": [
+      "gentle waves lapping against the pier, light wind"
+    ]
+  }
+}
